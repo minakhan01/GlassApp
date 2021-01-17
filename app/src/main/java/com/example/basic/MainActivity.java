@@ -20,7 +20,7 @@ public class MainActivity extends Activity {
     private static final int TAKE_PICTURE_REQUEST = 1;
     private static final int TAKE_VIDEO_REQUEST = 2;
     private GestureDetector mGestureDetector = null;
-    private CameraView cameraView = null;
+//    private CameraView cameraView = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,13 +28,13 @@ public class MainActivity extends Activity {
         Log.d("Main Activity", "onCreate");
 
         // Initiate CameraView
-        cameraView = new CameraView(this);
+//        cameraView = new CameraView(this);
 
         // Turn on Gestures
         mGestureDetector = createGestureDetector(this);
 
         // Set the view
-        setContentView(cameraView);
+        setContentView(R.layout.activity_main);
     }
 
     @Override
@@ -42,12 +42,12 @@ public class MainActivity extends Activity {
         super.onResume();
 
         // Do not hold the camera during onResume
-        if (cameraView != null) {
-            cameraView.releaseCamera();
-        }
+//        if (cameraView != null) {
+//            cameraView.releaseCamera();
+//        }
 
         // Set the view
-        setContentView(cameraView);
+//        setContentView(cameraView);
     }
 
     @Override
@@ -55,9 +55,9 @@ public class MainActivity extends Activity {
         super.onPause();
 
         // Do not hold the camera during onPause
-        if (cameraView != null) {
-            cameraView.releaseCamera();
-        }
+//        if (cameraView != null) {
+//            cameraView.releaseCamera();
+//        }
     }
 
     /**
@@ -71,7 +71,7 @@ public class MainActivity extends Activity {
             @Override
             public boolean onGesture(Gesture gesture) {
                 // Make sure view is initiated
-                if (cameraView != null) {
+//                if (cameraView != null) {
                     // Tap with a single finger for photo
                     if (gesture == Gesture.TAP) {
                         Log.d("Main Activity", "tapped");
@@ -87,7 +87,7 @@ public class MainActivity extends Activity {
 
                         return true;
                     }
-                }
+//                }
 
                 return false;
             }
