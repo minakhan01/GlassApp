@@ -30,25 +30,25 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        camera = Camera.open();
+//        camera = Camera.open();
+//
+//        // Set the Hotfix for Google Glass
+//        setCameraParameters(camera);
 
-        // Set the Hotfix for Google Glass
-        setCameraParameters(camera);
-
-        // Show the Camera display
-        try {
-            camera.setPreviewDisplay(holder);
-        } catch (Exception e) {
-            releaseCamera();
-        }
+//        // Show the Camera display
+//        try {
+//            camera.setPreviewDisplay(holder);
+//        } catch (Exception e) {
+//            releaseCamera();
+//        }
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
         // Start the preview for surfaceChanged
-        if (camera != null) {
-            camera.startPreview();
-        }
+//        if (camera != null) {
+//            camera.startPreview();
+//        }
     }
 
     /** Create a file Uri for saving an image or video */
@@ -100,7 +100,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 
             @Override
             public void onPictureTaken(byte[] data, Camera camera) {
-
+                Log.d("Camera View", "onpicturetakencalled");
                 File pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
 //                camera.setPreviewDisplay(cameraView);
                 if (pictureFile == null){
@@ -118,10 +118,15 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
                 } catch (IOException e) {
                     Log.d("Camera View", "Error accessing file: " + e.getMessage());
                 }
+                camera.stopPreview();
+                camera.release();
             }
         };
         try {
             Log.d("Camera View", "set preview display, start preview and take picture");
+            camera = Camera.open();
+            // Set the Hotfix for Google Glass
+            setCameraParameters(camera);
             camera.setPreviewDisplay(this.getHolder());
             camera.startPreview();
             camera.takePicture(null, null, mPicture);
