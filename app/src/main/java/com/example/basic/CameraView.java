@@ -104,7 +104,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
                 File pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
 //                camera.setPreviewDisplay(cameraView);
                 if (pictureFile == null){
-                    Log.d("Main Activity", "Error creating media file, check storage permissions");
+                    Log.d("Camera View", "Error creating media file, check storage permissions");
                     return;
                 }
 
@@ -114,9 +114,9 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
                     fos.close();
                     Log.d("Camera View", "write file");
                 } catch (FileNotFoundException e) {
-                    Log.d("Main Activity", "File not found: " + e.getMessage());
+                    Log.d("Camera View", "File not found: " + e.getMessage());
                 } catch (IOException e) {
-                    Log.d("Main Activity", "Error accessing file: " + e.getMessage());
+                    Log.d("Camera View", "Error accessing file: " + e.getMessage());
                 }
             }
         };
