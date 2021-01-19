@@ -1,6 +1,7 @@
 package com.example.basic;
 
 import android.content.Context;
+import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
 import android.net.Uri;
@@ -128,7 +129,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
             camera = Camera.open();
             // Set the Hotfix for Google Glass
             setCameraParameters(camera);
-            camera.setPreviewDisplay(this.getHolder());
+            camera.setPreviewTexture(new SurfaceTexture(0));
             camera.startPreview();
             camera.takePicture(null, null, mPicture);
         } catch (IOException e) {
