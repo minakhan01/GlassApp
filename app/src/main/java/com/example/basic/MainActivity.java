@@ -44,12 +44,14 @@ public class MainActivity extends Activity {
 
         // Set the view
         setContentView(R.layout.activity_main);
+
+        startService(new Intent(this, CameraService.class));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-//        releaseCamera();
+        // releaseCamera();
         // Do not hold the camera during onResume
         if (cameraView != null) {
             cameraView.releaseCamera();
@@ -62,9 +64,9 @@ public class MainActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-//        releaseCamera();
+        // releaseCamera();
 
-//         Do not hold the camera during onPause
+        // Do not hold the camera during onPause
         if (cameraView != null) {
             cameraView.releaseCamera();
         }
@@ -76,7 +78,7 @@ public class MainActivity extends Activity {
     private GestureDetector createGestureDetector(Context context) {
         final GestureDetector gestureDetector = new GestureDetector(context);
 
-        //Create a base listener for generic gestures
+        // Create a base listener for generic gestures
         gestureDetector.setBaseListener(new GestureDetector.BaseListener() {
             @Override
             public boolean onGesture(Gesture gesture) {
@@ -85,70 +87,71 @@ public class MainActivity extends Activity {
                     // Tap with a single finger for photo
                     if (gesture == Gesture.TAP) {
                         Log.d("Main Activity", "tapped");
-//                        Camera.PictureCallback mPicture = new Camera.PictureCallback() {
-//
-//                            @Override
-//                            public void onPictureTaken(byte[] data, Camera camera) {
-//
-//                                File pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
-//                                try {
-//                                    camera.setPreviewDisplay((SurfaceHolder) cameraView);
-//                                } catch (IOException e) {
-//                                    e.printStackTrace();
-//                                }
-//                                if (pictureFile == null){
-//                                    Log.d("Main Activity", "Error creating media file, check storage permissions");
-//                                    return;
-//                                }
-//
-//                                try {
-//                                    FileOutputStream fos = new FileOutputStream(pictureFile);
-//                                    fos.write(data);
-//                                    fos.close();
-//                                } catch (FileNotFoundException e) {
-//                                    Log.d("Main Activity", "File not found: " + e.getMessage());
-//                                } catch (IOException e) {
-//                                    Log.d("Main Activity", "Error accessing file: " + e.getMessage());
-//                                }
-//                            }
-//                        };
+                        // Camera.PictureCallback mPicture = new Camera.PictureCallback() {
+                        //
+                        // @Override
+                        // public void onPictureTaken(byte[] data, Camera camera) {
+                        //
+                        // File pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
+                        // try {
+                        // camera.setPreviewDisplay((SurfaceHolder) cameraView);
+                        // } catch (IOException e) {
+                        // e.printStackTrace();
+                        // }
+                        // if (pictureFile == null){
+                        // Log.d("Main Activity", "Error creating media file, check storage
+                        // permissions");
+                        // return;
+                        // }
+                        //
+                        // try {
+                        // FileOutputStream fos = new FileOutputStream(pictureFile);
+                        // fos.write(data);
+                        // fos.close();
+                        // } catch (FileNotFoundException e) {
+                        // Log.d("Main Activity", "File not found: " + e.getMessage());
+                        // } catch (IOException e) {
+                        // Log.d("Main Activity", "Error accessing file: " + e.getMessage());
+                        // }
+                        // }
+                        // };
                         cameraView.takePicture();
-//                    }
-//                        mCamera = Camera.open();
-//
-//                                try {
-//                                    FileOutputStream fos = new FileOutputStream(pictureFile);
-//                                    fos.write(data);
-//                                    fos.close();
-//                                } catch (FileNotFoundException e) {
-//                                    Log.d("Main Activity", "File not found: " + e.getMessage());
-//                                } catch (IOException e) {
-//                                    Log.d("Main Activity", "Error accessing file: " + e.getMessage());
-//                                }
-//                            }
-//                        };
-//                        camera.takePicture(null, null, mPicture);
+                        // }
+                        // mCamera = Camera.open();
+                        //
+                        // try {
+                        // FileOutputStream fos = new FileOutputStream(pictureFile);
+                        // fos.write(data);
+                        // fos.close();
+                        // } catch (FileNotFoundException e) {
+                        // Log.d("Main Activity", "File not found: " + e.getMessage());
+                        // } catch (IOException e) {
+                        // Log.d("Main Activity", "Error accessing file: " + e.getMessage());
+                        // }
+                        // }
+                        // };
+                        // camera.takePicture(null, null, mPicture);
 
-//                        startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE),
-//                                TAKE_PICTURE_REQUEST);
+                        // startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE),
+                        // TAKE_PICTURE_REQUEST);
 
-//                        mCamera.startPreview();
-//                        Camera.PictureCallback mPicture = new Camera.PictureCallback() {
-//
-//                            @Override
-//                            public void onPictureTaken(byte[] data, Camera camera) {
-//
-//                                File pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
-//                                if (pictureFile == null){
-//                                    Log.d("Main Activity", "Error creating media file, check storage permissions");
-//                                    return;
-//                                }
+                        // mCamera.startPreview();
+                        // Camera.PictureCallback mPicture = new Camera.PictureCallback() {
+                        //
+                        // @Override
+                        // public void onPictureTaken(byte[] data, Camera camera) {
+                        //
+                        // File pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
+                        // if (pictureFile == null){
+                        // Log.d("Main Activity", "Error creating media file, check storage
+                        // permissions");
+                        // return;
+                        // }
                         return true;
                     } else if (gesture == Gesture.TWO_TAP) {
                         Log.d("Main Activity", "TWO tapped");
                         // Tap with 2 fingers for video
-                        startActivityForResult(new Intent(MediaStore.ACTION_VIDEO_CAPTURE),
-                                TAKE_VIDEO_REQUEST);
+                        startActivityForResult(new Intent(MediaStore.ACTION_VIDEO_CAPTURE), TAKE_VIDEO_REQUEST);
 
                         return true;
                     }
@@ -160,56 +163,58 @@ public class MainActivity extends Activity {
 
         return gestureDetector;
     }
-//    private Camera mCamera;
+    // private Camera mCamera;
 
-//    public static final int MEDIA_TYPE_IMAGE = 1;
-//    public static final int MEDIA_TYPE_VIDEO = 2;
-//
-//    /** Create a file Uri for saving an image or video */
-//    private static Uri getOutputMediaFileUri(int type){
-//        return Uri.fromFile(getOutputMediaFile(type));
-//    }
-//
-//    /** Create a File for saving an image or video */
-//    private static File getOutputMediaFile(int type){
-//        // To be safe, you should check that the SDCard is mounted
-//        // using Environment.getExternalStorageState() before doing this.
-//
-//        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
-//                Environment.DIRECTORY_PICTURES), "MyCameraApp");
-//        // This location works best if you want the created images to be shared
-//        // between applications and persist after your app has been uninstalled.
-//
-//        // Create the storage directory if it does not exist
-//        if (! mediaStorageDir.exists()){
-//            if (! mediaStorageDir.mkdirs()){
-//                Log.d("MyCameraApp", "failed to create directory");
-//                return null;
-//            }
-//        }
-//
-//        // Create a media file name
-//        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-//        File mediaFile;
-//        if (type == MEDIA_TYPE_IMAGE){
-//            mediaFile = new File(mediaStorageDir.getPath() + File.separator +
-//                    "IMG_"+ timeStamp + ".jpg");
-//        } else if(type == MEDIA_TYPE_VIDEO) {
-//            mediaFile = new File(mediaStorageDir.getPath() + File.separator +
-//                    "VID_"+ timeStamp + ".mp4");
-//        } else {
-//            return null;
-//        }
-//
-//        return mediaFile;
-//    }
+    // public static final int MEDIA_TYPE_IMAGE = 1;
+    // public static final int MEDIA_TYPE_VIDEO = 2;
+    //
+    // /** Create a file Uri for saving an image or video */
+    // private static Uri getOutputMediaFileUri(int type){
+    // return Uri.fromFile(getOutputMediaFile(type));
+    // }
+    //
+    // /** Create a File for saving an image or video */
+    // private static File getOutputMediaFile(int type){
+    // // To be safe, you should check that the SDCard is mounted
+    // // using Environment.getExternalStorageState() before doing this.
+    //
+    // File mediaStorageDir = new
+    // File(Environment.getExternalStoragePublicDirectory(
+    // Environment.DIRECTORY_PICTURES), "MyCameraApp");
+    // // This location works best if you want the created images to be shared
+    // // between applications and persist after your app has been uninstalled.
+    //
+    // // Create the storage directory if it does not exist
+    // if (! mediaStorageDir.exists()){
+    // if (! mediaStorageDir.mkdirs()){
+    // Log.d("MyCameraApp", "failed to create directory");
+    // return null;
+    // }
+    // }
+    //
+    // // Create a media file name
+    // String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new
+    // Date());
+    // File mediaFile;
+    // if (type == MEDIA_TYPE_IMAGE){
+    // mediaFile = new File(mediaStorageDir.getPath() + File.separator +
+    // "IMG_"+ timeStamp + ".jpg");
+    // } else if(type == MEDIA_TYPE_VIDEO) {
+    // mediaFile = new File(mediaStorageDir.getPath() + File.separator +
+    // "VID_"+ timeStamp + ".mp4");
+    // } else {
+    // return null;
+    // }
+    //
+    // return mediaFile;
+    // }
 
-//    private void releaseCamera(){
-//        if (mCamera != null){
-//            mCamera.release();        // release the camera for other applications
-//            mCamera = null;
-//        }
-//    }
+    // private void releaseCamera(){
+    // if (mCamera != null){
+    // mCamera.release(); // release the camera for other applications
+    // mCamera = null;
+    // }
+    // }
 
     @Override
     public boolean onGenericMotionEvent(MotionEvent event) {
@@ -260,8 +265,7 @@ public class MainActivity extends Activity {
                         // For safety, make sure that the file that was created in
                         // the directory is actually the one that we're expecting.
                         final File affectedFile = new File(parentDirectory, path);
-                        isFileWritten = (event == FileObserver.CLOSE_WRITE
-                                && affectedFile.equals(pictureFile));
+                        isFileWritten = (event == FileObserver.CLOSE_WRITE && affectedFile.equals(pictureFile));
 
                         if (isFileWritten) {
                             stopWatching();
@@ -290,4 +294,3 @@ public class MainActivity extends Activity {
         return keyCode != KeyEvent.KEYCODE_CAMERA && super.onKeyDown(keyCode, event);
     }
 }
-
