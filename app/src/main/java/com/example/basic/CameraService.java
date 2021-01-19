@@ -33,7 +33,7 @@ public class CameraService extends Service {
             public void run() {
                 a++;
                 Log.d("Camera Service", "count: " + a);
-//                handler.postDelayed(runnable, delay);
+               handler.postDelayed(runnable, delay);
                 if (cameraView != null) {
                     cameraView.takePicture();
                 }
