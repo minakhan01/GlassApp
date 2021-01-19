@@ -4,11 +4,12 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
+//import androidx.annotation.Nullable;
 
-public class service extends Service {
+public class CameraService extends Service {
     private CameraView cameraView = null;
 
     @Override
@@ -16,7 +17,7 @@ public class service extends Service {
         // Initiate CameraView
         cameraView = new CameraView(this);
         TakeIntervalPicture();
-
+        Log.d("Camera Service", "onStartCommand");
         // If we get killed, after returning from here, restart
         return START_STICKY;
     }
@@ -24,15 +25,15 @@ public class service extends Service {
     int a = 0;
     Handler handler = new Handler();
     Runnable runnable;
-    int delay = 10000;
+    int delay = 30000;
 
     private void TakeIntervalPicture() {
-
+        Log.d("Camera Service", "TakeIntervalPicture");
         handler.postDelayed(runnable = new Runnable() {
             public void run() {
                 a++;
-                System.out.println("count: " + a);
-                handler.postDelayed(runnable, delay);
+                Log.d("Camera Service", "count: " + a);
+//                handler.postDelayed(runnable, delay);
                 if (cameraView != null) {
                     cameraView.takePicture();
                 }
@@ -46,11 +47,12 @@ public class service extends Service {
     // execution of the service will
     // stop on calling this method
     public void onDestroy() {
+        Log.d("Camera Service", "onDestroy");
         super.onDestroy();
 
     }
 
-    @Nullable
+//    @Nullable
     @Override
     public IBinder onBind(Intent intent) {
 

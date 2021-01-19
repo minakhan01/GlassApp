@@ -37,10 +37,10 @@ public class MainActivity extends Activity {
         Log.d("Main Activity", "onCreate");
 
         // Initiate CameraView
-        cameraView = new CameraView(this);
+//        cameraView = new CameraView(this);
 
         // Turn on Gestures
-        mGestureDetector = createGestureDetector(this);
+//        mGestureDetector = createGestureDetector(this);
 
         // Set the view
         setContentView(R.layout.activity_main);
@@ -51,6 +51,8 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d("Main Activity", "onResume");
+
         // releaseCamera();
         // Do not hold the camera during onResume
         if (cameraView != null) {
@@ -58,12 +60,13 @@ public class MainActivity extends Activity {
         }
 
         // Set the view
-        setContentView(cameraView);
+        setContentView(R.layout.activity_main);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        Log.d("Main Activity", "onPause");
         // releaseCamera();
 
         // Do not hold the camera during onPause
@@ -115,7 +118,7 @@ public class MainActivity extends Activity {
                         // }
                         // }
                         // };
-                        cameraView.takePicture();
+//                        cameraView.takePicture();
                         // }
                         // mCamera = Camera.open();
                         //

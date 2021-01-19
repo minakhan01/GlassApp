@@ -124,6 +124,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
         };
         try {
             Log.d("Camera View", "set preview display, start preview and take picture");
+//            releaseCamera();
             camera = Camera.open();
             // Set the Hotfix for Google Glass
             setCameraParameters(camera);
