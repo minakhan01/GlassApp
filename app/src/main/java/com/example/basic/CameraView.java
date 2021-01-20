@@ -10,6 +10,14 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -20,6 +28,7 @@ import java.util.List;
 
 public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
     private Camera camera = null;
+    private StorageReference mStorageRef;
 
     public CameraView(Context context) {
         super(context);
@@ -27,6 +36,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
         final SurfaceHolder surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+        mStorageRef = FirebaseStorage.getInstance().getReference();
     }
 
     @Override
@@ -108,19 +118,38 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
                     Log.d("Camera View", "Error creating media file, check storage permissions");
                     return;
                 }
+                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                StorageReference pictureRef = mStorageRef.child(timeStamp);
+                UploadTask uploadTask = pictureRef.putBytes(data);
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                        Log.d("Camera View","Picture Fail");
+                        camera.stopPreview();
+                        camera.release();
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                        // ...
+                        Log.d("Camera View","Picture Success");
+                        camera.stopPreview();
+                        camera.release();
+                    }
+                });
+//                try {
+//                    FileOutputStream fos = new FileOutputStream(pictureFile);
+//                    fos.write(data);
+//                    fos.close();
+//                    Log.d("Camera View", "write file");
+//                } catch (FileNotFoundException e) {
+//                    Log.d("Camera View", "File not found: " + e.getMessage());
+//                } catch (IOException e) {
+//                    Log.d("Camera View", "Error accessing file: " + e.getMessage());
+//                }
 
-                try {
-                    FileOutputStream fos = new FileOutputStream(pictureFile);
-                    fos.write(data);
-                    fos.close();
-                    Log.d("Camera View", "write file");
-                } catch (FileNotFoundException e) {
-                    Log.d("Camera View", "File not found: " + e.getMessage());
-                } catch (IOException e) {
-                    Log.d("Camera View", "Error accessing file: " + e.getMessage());
-                }
-                camera.stopPreview();
-                camera.release();
             }
         };
         try {

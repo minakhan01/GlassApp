@@ -17,6 +17,8 @@ import android.view.SurfaceHolder;
 import com.google.android.glass.content.Intents;
 import com.google.android.glass.touchpad.Gesture;
 import com.google.android.glass.touchpad.GestureDetector;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -31,10 +33,12 @@ public class MainActivity extends Activity {
     private GestureDetector mGestureDetector = null;
     private CameraView cameraView = null;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d("Main Activity", "onCreate");
+
 
         // Initiate CameraView
 //        cameraView = new CameraView(this);
