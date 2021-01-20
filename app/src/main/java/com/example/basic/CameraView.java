@@ -119,36 +119,44 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
                     return;
                 }
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                StorageReference pictureRef = mStorageRef.child(timeStamp+".jpg");
-                UploadTask uploadTask = pictureRef.putBytes(data);
-                uploadTask.addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Handle unsuccessful uploads
-                        Log.d("Camera View","Picture Fail");
-                        camera.stopPreview();
-                        camera.release();
-                    }
-                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                        // ...
-                        Log.d("Camera View","Picture Success");
-                        camera.stopPreview();
-                        camera.release();
-                    }
-                });
-//                try {
-//                    FileOutputStream fos = new FileOutputStream(pictureFile);
-//                    fos.write(data);
-//                    fos.close();
-//                    Log.d("Camera View", "write file");
-//                } catch (FileNotFoundException e) {
-//                    Log.d("Camera View", "File not found: " + e.getMessage());
-//                } catch (IOException e) {
-//                    Log.d("Camera View", "Error accessing file: " + e.getMessage());
-//                }
+
+                try {
+                    FileOutputStream fos = new FileOutputStream(pictureFile);
+                    fos.write(data);
+                    fos.close();
+                    Log.d("Camera View", "write file");
+                    mStorageRef = FirebaseStorage.getInstance().getReference();
+                    Log.d("Camera View", "mStorageRef "+mStorageRef.getPath());
+                    Log.d("Camera View", "getAbsolutePath: "+ pictureFile.getAbsolutePath());
+                    StorageReference pictureRef = mStorageRef.child(timeStamp+".jpg");
+                    Log.d("Camera View", "pictureRef "+pictureRef.toString());
+//                    pictureRef.putFile(pictureFile.toURI());
+                    UploadTask uploadTask = pictureRef.putBytes(data);
+                    uploadTask.addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle unsuccessful uploads
+                            Log.d("Camera View","Picture Fail");
+                            camera.stopPreview();
+                            camera.release();
+                        }
+                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                            // ...
+                            Log.d("Camera View","Picture Success");
+                            camera.stopPreview();
+                            camera.release();
+                        }
+                    });
+                } catch (FileNotFoundException e) {
+                    Log.d("Camera View", "File not found: " + e.getMessage());
+                } catch (IOException e) {
+                    Log.d("Camera View", "Error accessing file: " + e.getMessage());
+                }
+
+
 
             }
         };
