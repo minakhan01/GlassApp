@@ -119,7 +119,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
                     return;
                 }
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                StorageReference pictureRef = mStorageRef.child(timeStamp);
+                StorageReference pictureRef = mStorageRef.child(timeStamp+".jpg");
                 UploadTask uploadTask = pictureRef.putBytes(data);
                 uploadTask.addOnFailureListener(new OnFailureListener() {
                     @Override
