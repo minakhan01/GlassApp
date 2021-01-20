@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    compileSdkVersion "Google Inc.:Glass Development Kit Preview:19"
+    compileSdkVersion 30
 
     defaultConfig {
         applicationId "com.example.basic"
@@ -12,8 +12,6 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -31,3 +29,5 @@ android {
 dependencies {
     implementation 'com.google.firebase:firebase-storage:19.1.1'
 }
+
+apply plugin: 'com.google.gms.google-services'

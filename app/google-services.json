@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "55160119250",
-    "project_id": "glass-app-75564",
-    "storage_bucket": "glass-app-75564.appspot.com"
+    "project_number": "803059749423",
+    "project_id": "glass-app-67aa6",
+    "storage_bucket": "glass-app-67aa6.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:55160119250:android:f23762a1b46404d872320b",
+        "mobilesdk_app_id": "1:803059749423:android:77890edfe1a582c799acda",
         "android_client_info": {
           "package_name": "com.example.basic"
         }
       },
       "oauth_client": [
         {
-          "client_id": "55160119250-gs9sb0d4rpd34aodhu9qtis0npg5mjub.apps.googleusercontent.com",
+          "client_id": "803059749423-90mpj46v0m7uvqngmh8h5cen8q1ksp46.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD7jOSv59UETbqfWk6f6S_p7xUep-VdYdU"
+          "current_key": "AIzaSyArT4oNxRpQcTOKVUE7FGhM2CsVx3iUbU0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "55160119250-gs9sb0d4rpd34aodhu9qtis0npg5mjub.apps.googleusercontent.com",
+              "client_id": "803059749423-90mpj46v0m7uvqngmh8h5cen8q1ksp46.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

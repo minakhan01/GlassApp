@@ -14,9 +14,9 @@ import android.view.MotionEvent;
 import android.hardware.Camera;
 import android.view.SurfaceHolder;
 
-import com.google.android.glass.content.Intents;
-import com.google.android.glass.touchpad.Gesture;
-import com.google.android.glass.touchpad.GestureDetector;
+//import com.google.android.glass.content.Intents;
+//import com.google.android.glass.touchpad.Gesture;
+//import com.google.android.glass.touchpad.GestureDetector;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -30,7 +30,7 @@ import java.util.Date;
 public class MainActivity extends Activity {
     private static final int TAKE_PICTURE_REQUEST = 1;
     private static final int TAKE_VIDEO_REQUEST = 2;
-    private GestureDetector mGestureDetector = null;
+//    private GestureDetector mGestureDetector = null;
     private CameraView cameraView = null;
 
 
@@ -82,94 +82,94 @@ public class MainActivity extends Activity {
     /**
      * Gesture detection for fingers on the Glass
      */
-    private GestureDetector createGestureDetector(Context context) {
-        final GestureDetector gestureDetector = new GestureDetector(context);
-
-        // Create a base listener for generic gestures
-        gestureDetector.setBaseListener(new GestureDetector.BaseListener() {
-            @Override
-            public boolean onGesture(Gesture gesture) {
-                // Make sure view is initiated
-                if (cameraView != null) {
-                    // Tap with a single finger for photo
-                    if (gesture == Gesture.TAP) {
-                        Log.d("Main Activity", "tapped");
-                        // Camera.PictureCallback mPicture = new Camera.PictureCallback() {
-                        //
-                        // @Override
-                        // public void onPictureTaken(byte[] data, Camera camera) {
-                        //
-                        // File pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
-                        // try {
-                        // camera.setPreviewDisplay((SurfaceHolder) cameraView);
-                        // } catch (IOException e) {
-                        // e.printStackTrace();
-                        // }
-                        // if (pictureFile == null){
-                        // Log.d("Main Activity", "Error creating media file, check storage
-                        // permissions");
-                        // return;
-                        // }
-                        //
-                        // try {
-                        // FileOutputStream fos = new FileOutputStream(pictureFile);
-                        // fos.write(data);
-                        // fos.close();
-                        // } catch (FileNotFoundException e) {
-                        // Log.d("Main Activity", "File not found: " + e.getMessage());
-                        // } catch (IOException e) {
-                        // Log.d("Main Activity", "Error accessing file: " + e.getMessage());
-                        // }
-                        // }
-                        // };
-//                        cameraView.takePicture();
-                        // }
-                        // mCamera = Camera.open();
-                        //
-                        // try {
-                        // FileOutputStream fos = new FileOutputStream(pictureFile);
-                        // fos.write(data);
-                        // fos.close();
-                        // } catch (FileNotFoundException e) {
-                        // Log.d("Main Activity", "File not found: " + e.getMessage());
-                        // } catch (IOException e) {
-                        // Log.d("Main Activity", "Error accessing file: " + e.getMessage());
-                        // }
-                        // }
-                        // };
-                        // camera.takePicture(null, null, mPicture);
-
-                        // startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE),
-                        // TAKE_PICTURE_REQUEST);
-
-                        // mCamera.startPreview();
-                        // Camera.PictureCallback mPicture = new Camera.PictureCallback() {
-                        //
-                        // @Override
-                        // public void onPictureTaken(byte[] data, Camera camera) {
-                        //
-                        // File pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
-                        // if (pictureFile == null){
-                        // Log.d("Main Activity", "Error creating media file, check storage
-                        // permissions");
-                        // return;
-                        // }
-                        return true;
-                    } else if (gesture == Gesture.TWO_TAP) {
-                        Log.d("Main Activity", "TWO tapped");
-                        // Tap with 2 fingers for video
-                        startActivityForResult(new Intent(MediaStore.ACTION_VIDEO_CAPTURE), TAKE_VIDEO_REQUEST);
-
-                        return true;
-                    }
-                }
-
-                return false;
-            }
-        });
-
-        return gestureDetector;
-    }
+//    private GestureDetector createGestureDetector(Context context) {
+//        final GestureDetector gestureDetector = new GestureDetector(context);
+//
+//        // Create a base listener for generic gestures
+//        gestureDetector.setBaseListener(new GestureDetector.BaseListener() {
+//            @Override
+//            public boolean onGesture(Gesture gesture) {
+//                // Make sure view is initiated
+//                if (cameraView != null) {
+//                    // Tap with a single finger for photo
+//                    if (gesture == Gesture.TAP) {
+//                        Log.d("Main Activity", "tapped");
+//                        // Camera.PictureCallback mPicture = new Camera.PictureCallback() {
+//                        //
+//                        // @Override
+//                        // public void onPictureTaken(byte[] data, Camera camera) {
+//                        //
+//                        // File pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
+//                        // try {
+//                        // camera.setPreviewDisplay((SurfaceHolder) cameraView);
+//                        // } catch (IOException e) {
+//                        // e.printStackTrace();
+//                        // }
+//                        // if (pictureFile == null){
+//                        // Log.d("Main Activity", "Error creating media file, check storage
+//                        // permissions");
+//                        // return;
+//                        // }
+//                        //
+//                        // try {
+//                        // FileOutputStream fos = new FileOutputStream(pictureFile);
+//                        // fos.write(data);
+//                        // fos.close();
+//                        // } catch (FileNotFoundException e) {
+//                        // Log.d("Main Activity", "File not found: " + e.getMessage());
+//                        // } catch (IOException e) {
+//                        // Log.d("Main Activity", "Error accessing file: " + e.getMessage());
+//                        // }
+//                        // }
+//                        // };
+////                        cameraView.takePicture();
+//                        // }
+//                        // mCamera = Camera.open();
+//                        //
+//                        // try {
+//                        // FileOutputStream fos = new FileOutputStream(pictureFile);
+//                        // fos.write(data);
+//                        // fos.close();
+//                        // } catch (FileNotFoundException e) {
+//                        // Log.d("Main Activity", "File not found: " + e.getMessage());
+//                        // } catch (IOException e) {
+//                        // Log.d("Main Activity", "Error accessing file: " + e.getMessage());
+//                        // }
+//                        // }
+//                        // };
+//                        // camera.takePicture(null, null, mPicture);
+//
+//                        // startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE),
+//                        // TAKE_PICTURE_REQUEST);
+//
+//                        // mCamera.startPreview();
+//                        // Camera.PictureCallback mPicture = new Camera.PictureCallback() {
+//                        //
+//                        // @Override
+//                        // public void onPictureTaken(byte[] data, Camera camera) {
+//                        //
+//                        // File pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
+//                        // if (pictureFile == null){
+//                        // Log.d("Main Activity", "Error creating media file, check storage
+//                        // permissions");
+//                        // return;
+//                        // }
+//                        return true;
+//                    } else if (gesture == Gesture.TWO_TAP) {
+//                        Log.d("Main Activity", "TWO tapped");
+//                        // Tap with 2 fingers for video
+//                        startActivityForResult(new Intent(MediaStore.ACTION_VIDEO_CAPTURE), TAKE_VIDEO_REQUEST);
+//
+//                        return true;
+//                    }
+//                }
+//
+//                return false;
+//            }
+//        });
+//
+//        return gestureDetector;
+//    }
     // private Camera mCamera;
 
     // public static final int MEDIA_TYPE_IMAGE = 1;
@@ -223,29 +223,29 @@ public class MainActivity extends Activity {
     // }
     // }
 
-    @Override
-    public boolean onGenericMotionEvent(MotionEvent event) {
-        // Send generic motion events to the gesture detector
-        Log.d("Main Activity", "onGenericMotionEvent");
-        return mGestureDetector != null && mGestureDetector.onMotionEvent(event);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Handle photos
-        if (requestCode == TAKE_PICTURE_REQUEST && resultCode == RESULT_OK) {
-            String picturePath = data.getStringExtra(Intents.EXTRA_PICTURE_FILE_PATH);
-            processPictureWhenReady(picturePath);
-        }
-
-        // Handle videos
-        if (requestCode == TAKE_VIDEO_REQUEST && resultCode == RESULT_OK) {
-            String picturePath = data.getStringExtra(Intents.EXTRA_VIDEO_FILE_PATH);
-            processPictureWhenReady(picturePath);
-        }
-
-        super.onActivityResult(requestCode, resultCode, data);
-    }
+//    @Override
+//    public boolean onGenericMotionEvent(MotionEvent event) {
+//        // Send generic motion events to the gesture detector
+//        Log.d("Main Activity", "onGenericMotionEvent");
+//        return mGestureDetector != null && mGestureDetector.onMotionEvent(event);
+//    }
+//
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        // Handle photos
+//        if (requestCode == TAKE_PICTURE_REQUEST && resultCode == RESULT_OK) {
+//            String picturePath = data.getStringExtra(Intents.EXTRA_PICTURE_FILE_PATH);
+//            processPictureWhenReady(picturePath);
+//        }
+//
+//        // Handle videos
+//        if (requestCode == TAKE_VIDEO_REQUEST && resultCode == RESULT_OK) {
+//            String picturePath = data.getStringExtra(Intents.EXTRA_VIDEO_FILE_PATH);
+//            processPictureWhenReady(picturePath);
+//        }
+//
+//        super.onActivityResult(requestCode, resultCode, data);
+//    }
 
     /**
      * Process picture - from example GDK
