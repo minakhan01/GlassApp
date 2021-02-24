@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
@@ -29,10 +31,11 @@ import java.util.List;
 public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
     private Camera camera = null;
     private StorageReference mStorageRef;
+    private Context cameraViewContext;
 
     public CameraView(Context context) {
         super(context);
-
+        cameraViewContext = context;
         final SurfaceHolder surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
@@ -119,11 +122,23 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
                     return;
                 }
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-
-                try {
-                    FileOutputStream fos = new FileOutputStream(pictureFile);
-                    fos.write(data);
-                    fos.close();
+                if (!isConnectedToInternet()) {
+                    Log.d("CAMERA VIEW", "NOT CONNECTED");
+                    try {
+                        FileOutputStream fos;
+                        fos = new FileOutputStream(pictureFile);
+                        fos.write(data);
+                        fos.close();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+//                try {
+//                    FileOutputStream fos = new FileOutputStream(pictureFile);
+//                    fos.write(data);
+//                    fos.close();
                     Log.d("Camera View", "write file");
                     mStorageRef = FirebaseStorage.getInstance().getReference();
                     Log.d("Camera View", "mStorageRef "+mStorageRef.getPath());
@@ -137,6 +152,18 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
                         public void onFailure(@NonNull Exception exception) {
                             // Handle unsuccessful uploads
                             Log.d("Camera View","Picture Fail");
+                            try {
+                                FileOutputStream fos;
+                                fos = new FileOutputStream(pictureFile);
+                                fos.write(data);
+                                fos.close();
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            Log.d("Camera View", "write file");
                             camera.stopPreview();
                             camera.release();
                         }
@@ -150,11 +177,11 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
                             camera.release();
                         }
                     });
-                } catch (FileNotFoundException e) {
-                    Log.d("Camera View", "File not found: " + e.getMessage());
-                } catch (IOException e) {
-                    Log.d("Camera View", "Error accessing file: " + e.getMessage());
-                }
+//                } catch (FileNotFoundException e) {
+//                    Log.d("Camera View", "File not found: " + e.getMessage());
+//                } catch (IOException e) {
+//                    Log.d("Camera View", "Error accessing file: " + e.getMessage());
+//                }
 
 
 
@@ -172,6 +199,17 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private boolean isConnectedToInternet() {
+        ConnectivityManager cm =
+                (ConnectivityManager) cameraViewContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        Log.d("CAMERA_VIEW", "isconnected: "+ isConnected);
+        return isConnected;
     }
 
     @Override
