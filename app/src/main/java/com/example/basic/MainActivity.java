@@ -24,12 +24,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends Activity {
     private static final int TAKE_PICTURE_REQUEST = 1;
     private static final int TAKE_VIDEO_REQUEST = 2;
     private GestureDetector mGestureDetector = null;
     private CameraView cameraView = null;
+    private Timer mTmr;
+    private TimerTask mTsk;
+    private static final int USER_DEFINED_EXECUTION_INTERVAL = 1*60*1000;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,12 +48,24 @@ public class MainActivity extends Activity {
         mGestureDetector = createGestureDetector(this);
 
         // Set the view
-        setContentView(R.layout.activity_main);
+//        setContentView(R.layout.activity_main);
+        setContentView(cameraView);
+//        mTmr = new Timer();
+//        mTsk = new TimerTask() {
+//            @Override
+//            public void run() {
+//                //Take picture or do whatever you want
+//                Log.d("Activity Main", "executing timer task camera");
+//                cameraView.takePicture();
+//            }
+//        };
+//        mTmr.schedule(mTsk, 0, USER_DEFINED_EXECUTION_INTERVAL);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d("Activity Main", "onResume");
 //        releaseCamera();
         // Do not hold the camera during onResume
         if (cameraView != null) {
@@ -56,12 +73,36 @@ public class MainActivity extends Activity {
         }
 
         // Set the view
-        setContentView(cameraView);
+        mTmr = new Timer();
+        mTsk = new TimerTask() {
+            @Override
+            public void run() {
+                //Take picture or do whatever you want
+                Log.d("Activity Main", "executing timer task camera");
+                cameraView.takePicture();
+            }
+        };
+        mTmr.schedule(mTsk, 0, USER_DEFINED_EXECUTION_INTERVAL);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        Log.d("Activity Main", "onPause");
+        mTmr.cancel();
+//        releaseCamera();
+
+//         Do not hold the camera during onPause
+        if (cameraView != null) {
+            cameraView.releaseCamera();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mTmr.cancel();
+        Log.d("Activity Main", "onPause");
 //        releaseCamera();
 
 //         Do not hold the camera during onPause
