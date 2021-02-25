@@ -21,6 +21,9 @@
         <service android:name=".CameraService"
             android:enabled="true"
             android:icon="@mipmap/ic_launcher">
+        <service android:name=".FileUploadService"
+            android:enabled="true"
+            android:icon="@mipmap/ic_launcher">
 
         </service>
         <activity android:name=".MainActivity"

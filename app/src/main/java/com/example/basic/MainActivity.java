@@ -50,6 +50,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         startService(new Intent(this, CameraService.class));
+        startService(new Intent(this, FileUploadService.class));
     }
 
     @Override
