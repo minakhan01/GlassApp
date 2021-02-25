@@ -31,7 +31,8 @@ public class FileUploadService extends Service {
     int a = 0;
     Handler handler = new Handler();
     Runnable runnable;
-    int delay = 10 * 60 * 1000 + 20;
+    // int delay = 10 * 60 * 1000 + 20;
+    int delay = 10 * 1000;
 
     private void FileUploadInterval() {
         Log.d("File Upload Service", "FileUploadInterval");
@@ -47,31 +48,34 @@ public class FileUploadService extends Service {
                     Log.d("File Upload Service", "No Pictures");
                 } else {
                     for (int i = 0; i < contents.length; i++) {
-                        Log.d("File Upload Service", "upload");
-                        StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
-                        Log.d("File Upload Service", "mStorageRef " + mStorageRef.getPath());
-                        StorageReference pictureRef = mStorageRef.child(contents[i].getName());
-                        Log.d("File Upload Service", "pictureRef " + pictureRef.toString());
-                        Uri file = Uri.fromFile(new File(contents[i].getAbsolutePath()));
-                        UploadTask uploadTask = pictureRef.putFile(file);
-                        int finalI = i;
-                        uploadTask.addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception exception) {
-                                // Handle unsuccessful uploads
-                                Log.d("File Upload Service", "Picture Fail");
+                        File fileToDelete = new File(contents[i].getAbsolutePath());
+                        boolean deleted = fileToDelete.delete();
+                        Log.d("File Upload Service", "Picture deleted" + deleted);
+                        // Log.d("File Upload Service", "upload");
+                        // StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
+                        // Log.d("File Upload Service", "mStorageRef " + mStorageRef.getPath());
+                        // StorageReference pictureRef = mStorageRef.child(contents[i].getName());
+                        // Log.d("File Upload Service", "pictureRef " + pictureRef.toString());
+                        // Uri file = Uri.fromFile(new File(contents[i].getAbsolutePath()));
+                        // UploadTask uploadTask = pictureRef.putFile(file);
+                        // int finalI = i;
+                        // uploadTask.addOnFailureListener(new OnFailureListener() {
+                        //     @Override
+                        //     public void onFailure(@NonNull Exception exception) {
+                        //         // Handle unsuccessful uploads
+                        //         Log.d("File Upload Service", "Picture Fail");
 
-                            }
-                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        //     }
+                        // }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        //     @Override
+                        //     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                                Log.d("File Upload Service", "Picture Success");
-                                File fileToDelete = new File(contents[finalI].getAbsolutePath());
-                                boolean deleted = fileToDelete.delete();
-                                Log.d("File Upload Service", "Picture deleted" + deleted);
-                            }
-                        });
+                        //         Log.d("File Upload Service", "Picture Success");
+                        //         File fileToDelete = new File(contents[finalI].getAbsolutePath());
+                        //         boolean deleted = fileToDelete.delete();
+                        //         Log.d("File Upload Service", "Picture deleted" + deleted);
+                        //     }
+                        // });
                     }
 
                 }
