@@ -93,7 +93,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
         File mediaFile;
         if (type == MEDIA_TYPE_IMAGE){
             mediaFile = new File(mediaStorageDir.getPath() + File.separator +
-                    "IMG_"+ timeStamp + ".jpg");
+                    timeStamp + ".jpg");
         } else if(type == MEDIA_TYPE_VIDEO) {
             mediaFile = new File(mediaStorageDir.getPath() + File.separator +
                     "VID_"+ timeStamp + ".mp4");
@@ -143,7 +143,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
                     mStorageRef = FirebaseStorage.getInstance().getReference();
                     Log.d("Camera View", "mStorageRef "+mStorageRef.getPath());
                     Log.d("Camera View", "getAbsolutePath: "+ pictureFile.getAbsolutePath());
-                    StorageReference pictureRef = mStorageRef.child(timeStamp+".jpg");
+                    StorageReference pictureRef = mStorageRef.child("glass_0/"+timeStamp+".jpg");
                     Log.d("Camera View", "pictureRef "+pictureRef.toString());
 //                    pictureRef.putFile(pictureFile.toURI());
                     UploadTask uploadTask = pictureRef.putBytes(data);

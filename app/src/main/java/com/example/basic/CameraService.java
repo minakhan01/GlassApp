@@ -31,7 +31,7 @@ public class CameraService extends Service {
     int a = 0;
     Handler handler = new Handler();
     Runnable runnable;
-    int delay = 2*60*1000;
+    int delay = 60*1000;
 
     private void TakeIntervalPicture() {
         Log.d("Camera Service", "TakeIntervalPicture");
