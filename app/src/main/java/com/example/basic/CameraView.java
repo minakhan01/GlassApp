@@ -11,6 +11,7 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import com.loopj.android.http.*;
 
 import androidx.annotation.NonNull;
 
@@ -173,6 +174,24 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
                             // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
                             // ...
                             Log.d("Camera View","Picture Success");
+                            AsyncHttpClient client = new AsyncHttpClient();
+                            RequestParams params = new RequestParams();
+                            params.put("id", "6036411aed9cca4f3d113a2e");
+                            params.put("url", "https://firebasestorage.googleapis.com/v0/b/glass-app-67aa6.appspot.com/o/1I17D5gCw7zkmVE8vDvNw18Fg74CfTDDM.jpg?alt=media&token=c461dfef-a329-40e2-81d5-e498b9765d88");
+                            client.post("https://thepallab.com/api/glass/addpic",params, new AsyncHttpResponseHandler() {
+
+                                @Override
+                                public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody) {
+
+                                }
+
+                                @Override
+                                public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody, Throwable error) {
+
+                                }
+
+
+                            });
                             camera.stopPreview();
                             camera.release();
                         }
