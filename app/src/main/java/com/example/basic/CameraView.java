@@ -174,24 +174,32 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
                             // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
                             // ...
                             Log.d("Camera View","Picture Success "+ taskSnapshot.getMetadata());
-                            AsyncHttpClient client = new AsyncHttpClient();
-                            RequestParams params = new RequestParams();
-                            params.put("id", "6036411aed9cca4f3d113a2e");
-                            params.put("url", taskSnapshot.getTask().getResult());
-                            client.post("https://thepallab.com/api/glass/addpic",params, new AsyncHttpResponseHandler() {
-
+                            pictureRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
-                                public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody) {
+                                public void onSuccess(Uri downloadPhotoUrl) {
+                                    //Now play with downloadPhotoUrl
+                                    //Store data into Firebase Realtime Database
+                                    AsyncHttpClient client = new AsyncHttpClient();
+                                    RequestParams params = new RequestParams();
+                                    params.put("id", "6036411aed9cca4f3d113a2e");
+                                    params.put("url", downloadPhotoUrl.toString());
+                                    client.post("https://thepallab.com/api/glass/addpic",params, new AsyncHttpResponseHandler() {
 
+                                        @Override
+                                        public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody) {
+
+                                        }
+
+                                        @Override
+                                        public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody, Throwable error) {
+
+                                        }
+
+
+                                    });
                                 }
-
-                                @Override
-                                public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody, Throwable error) {
-
-                                }
-
-
                             });
+
                             camera.stopPreview();
                             camera.release();
                         }
