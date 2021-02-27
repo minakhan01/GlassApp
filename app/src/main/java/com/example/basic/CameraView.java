@@ -136,17 +136,12 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
                         e.printStackTrace();
                     }
                 }
-//                try {
-//                    FileOutputStream fos = new FileOutputStream(pictureFile);
-//                    fos.write(data);
-//                    fos.close();
                     Log.d("Camera View", "write file");
                     mStorageRef = FirebaseStorage.getInstance().getReference();
                     Log.d("Camera View", "mStorageRef "+mStorageRef.getPath());
                     Log.d("Camera View", "getAbsolutePath: "+ pictureFile.getAbsolutePath());
                     StorageReference pictureRef = mStorageRef.child("glass_0/"+timeStamp+".jpg");
                     Log.d("Camera View", "pictureRef "+pictureRef.toString());
-//                    pictureRef.putFile(pictureFile.toURI());
                     UploadTask uploadTask = pictureRef.putBytes(data);
                     uploadTask.addOnFailureListener(new OnFailureListener() {
                         @Override

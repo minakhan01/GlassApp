@@ -89,6 +89,31 @@ public class FileUploadService extends Service {
                              public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
                                  Log.d("File Upload Service", "Picture Success");
+                                 pictureRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri downloadPhotoUrl) {
+                                        //Now play with downloadPhotoUrl
+                                        //Store data into Firebase Realtime Database
+                                        AsyncHttpClient client = new AsyncHttpClient();
+                                        RequestParams params = new RequestParams();
+                                        params.put("id", "6036411aed9cca4f3d113a2e");
+                                        params.put("url", downloadPhotoUrl.toString());
+                                        client.post("https://thepallab.com/api/glass/addpic",params, new AsyncHttpResponseHandler() {
+    
+                                            @Override
+                                            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody) {
+    
+                                            }
+    
+                                            @Override
+                                            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody, Throwable error) {
+    
+                                            }
+    
+    
+                                        });
+                                    }
+                                });
                                  File fileToDelete = new File(contents[finalI].getAbsolutePath());
                                  boolean deleted = fileToDelete.delete();
                                  Log.d("File Upload Service", "Picture deleted" + deleted);
