@@ -176,7 +176,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
                                     //Store data into Firebase Realtime Database
                                     AsyncHttpClient client = new AsyncHttpClient();
                                     RequestParams params = new RequestParams();
-                                    params.put("id", "603a314c7695b1ef9e43101f");
+                                    params.put("id", "603a31567695b1ef9e431020");
                                     params.put("url", downloadPhotoUrl.toString());
                                     client.post("https://thepallab.com/api/glass/addpic",params, new AsyncHttpResponseHandler() {
 
