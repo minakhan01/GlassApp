@@ -96,7 +96,7 @@ public class FileUploadService extends Service {
                                         //Store data into Firebase Realtime Database
                                         AsyncHttpClient client = new AsyncHttpClient();
                                         RequestParams params = new RequestParams();
-                                        params.put("id", "603a31177695b1ef9e431019");
+                                        params.put("id", "603a312f7695b1ef9e43101b");
                                         params.put("url", downloadPhotoUrl.toString());
                                         client.post("https://thepallab.com/api/glass/addpic",params, new AsyncHttpResponseHandler() {
     
